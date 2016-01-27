@@ -22,18 +22,21 @@ public class MazeRunner {
         this.bfsQueue = new LinkedListQueue<>();
     }
     
-    public void runMaze(MazeNode headNode)
+    public void runMaze(Maze maze)
     {
-        bfsQueue.enqueue(headNode);
-        MazeNode node = headNode;
-        
-        if(node.mazeExit)
+        bfsQueue.enqueue(maze.getEntrance());
+        MazeNode node = null;
+        while(!bfsQueue.isEmpty())
         {
-            System.out.println("Exit was found!");
-        }else
-        {
-            for(MazeNode nextNode: node.exits){
-
+            node = bfsQueue.dequeue();
+            if(node.getMazeExit())
+            {
+                System.out.println("Exit was found!");
+            }else
+            {
+                for(MazeNode nextNode: node.getExits()){
+                    bfsQueue.enqueue(nextNode);
+                }
             }
         }
     }
